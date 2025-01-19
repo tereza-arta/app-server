@@ -25,7 +25,7 @@ jobs:
           docker login -u ${{ secrets.DOCKER_UNAME }} -p ${{ secrets.DOCKER_TOKEN }}
           docker push ${{ secrets.DOCKER_UNAME }}/app-server:${GITHUB_SHA::7}
 
-  Change-iamge-tag-and-deploy:
+  Change-image-tag-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -46,10 +46,13 @@ jobs:
       - name: Clone target repository
         run : git clone git@github.com:tereza-arta/app-deployment.git
 
+      - name: Set Short Git SHA
+        run : echo "SHORT_SHA=${GITHUB_SHA::7}" >> $GITHUB_ENV
+
       - name: Update manifest with yq
         working-directory: app-deployment
         run: |
-          yq '.spec.template.spec.containers.[0].image = "terezabisharyan/simple-nodejs:${GITHUB_SHA::7}"' -i k8s-manifests/server/deploy.yml
+          yq '.spec.template.spec.containers.[0].image = "terezabisharyan/simple-nodejs:${{env.SHORT_SHA}}"' -i k8s-manifests/server/deploy.yml
 
       - name: Commit and push changes
         working-directory: app-deployment
