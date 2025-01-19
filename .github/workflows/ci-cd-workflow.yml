@@ -14,7 +14,7 @@ jobs:
 
       - name: Build and tag of docker image
         run: |
-          docker build -t ${{ secrets.DOCKER_UNAME }}/app-server:${GITHUB_SHA::7} ./source_code/
+          docker build -t ${{ secrets.DOCKER_UNAME }}/app-server:${GITHUB_SHA::7} .
 
       - name: Test newly created build image
         run: docker run --rm -d -p 4000:4000 --name back-cnt ${{ secrets.DOCKER_UNAME }}/app-server:${GITHUB_SHA::7}
