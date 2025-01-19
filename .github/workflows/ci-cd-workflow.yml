@@ -52,7 +52,7 @@ jobs:
       - name: Update manifest with yq
         working-directory: app-deployment
         run: |
-          yq '.spec.template.spec.containers.[0].image = "terezabisharyan/simple-nodejs:${{env.SHORT_SHA}}"' -i k8s-manifests/server/deploy.yml
+          yq '.spec.template.spec.containers.[0].image = "terezabisharyan/app-server:${{env.SHORT_SHA}}"' -i k8s-manifests/server/deploy.yml
 
       - name: Commit and push changes
         working-directory: app-deployment
