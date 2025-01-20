@@ -1,0 +1,14 @@
+{
+  "apps": [
+    {
+      "name": "node-web-server",
+      "cwd": "/home/ubuntu/app-server/source_code",
+      "script": "server.js",
+      "watch": true,
+      "env": {
+        "EXPRESS_PORT": 4000
+      }
+
+    }
+  ]
+}
