@@ -7,7 +7,7 @@ app.get('/info', (req, res) => {
 });
 
 app.get('/', (req, res) => {
-    res.send('Backend is running. Please use API routes like /info.');
+    res.send('Backend is running.... Please use API routes like /info.');
 });
 
 app.listen(EXPRESS_PORT, () =>
