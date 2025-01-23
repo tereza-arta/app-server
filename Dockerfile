@@ -4,6 +4,8 @@ WORKDIR /back
 
 COPY source_code/package*.json ./
 
+COPY source_code/server.js ./
+
 RUN npm install
  
 COPY . .
