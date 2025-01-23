@@ -29,7 +29,7 @@ jobs:
           docker push ${{ secrets.DOCKER_UNAME }}/app-server:${GITHUB_SHA::7}
 
   Change-image-tag-and-deploy:
-    runs-on: for-back
+    runs-on: self-hosted
 
     steps:
       - name: Checkout repository
