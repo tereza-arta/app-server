@@ -40,9 +40,8 @@ jobs:
         run: docker ps -a --filter "name=back-cnt"
 
       - name: Create docker container
-        #if: ${{ !steps.test.outputs.stdout || contains(steps.test.outputs.stdout, 'back-cnt') }}
         run: |
-          if [ ! docker ps -a --format '{{.Names}}' | grep -q 'back-cnt' ]; then
+          if ! docker ps -a --format '{{.Names}}' | grep -q 'back-cnt'; then
             docker run --rm -d --name back-cnt --network host ${{ secrets.DOCKER_UNAME }}/app-server:${GITHUB_SHA::7}
           else
             echo "Container with name 'back-cnt' already exists!"
