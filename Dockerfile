@@ -2,7 +2,11 @@ FROM node:10-alpine
 
 WORKDIR /back
 
-COPY source_code/* ./
+COPY source_code/package*.json ./
+
+RUN npm install
+ 
+COPY . .
 
 EXPOSE 4000
 
