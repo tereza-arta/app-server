@@ -20,7 +20,7 @@ jobs:
           docker build -t ${{ secrets.DOCKER_UNAME }}/app-server:${GITHUB_SHA::7} .
 
       - name: Test newly created build image
-        run: docker run --rm -d -p 4000:4000 --name back-cnt ${{ secrets.DOCKER_UNAME }}/app-server:${GITHUB_SHA::7}
+        run: docker run --rm -d --name back-cnt --network host ${{ secrets.DOCKER_UNAME }}/app-server:${GITHUB_SHA::7}
 
       - name: Push image to DockerHub
         if  : success()
@@ -41,12 +41,12 @@ jobs:
 
       - name: Create docker container(if its does not exist)
         if: ${{ !contains(steps.test.outputs.stdout, 'back-cnt') }}
-        run: docker run --rm -d -p 4000:4000 --name back-cnt ${{ secrets.DOCKER_UNAME }}/app-server:${GITHUB_SHA::7}
+        run: docker run --rm -d --name back-cnt --network host ${{ secrets.DOCKER_UNAME }}/app-server:${GITHUB_SHA::7}
 
       - name: Create new docker container(if it already exist)
         if: ${{ contains(steps.test.outputs.stdout, 'back-cnt') }}
         run: |
           docker stop back-cnt
-          docker run --rm -d -p 4000:4000 --name back-cnt ${{ secrets.DOCKER_UNAME }}/app-server:${GITHUB_SHA::7}  
+          docker run --rm -d --name back-cnt --network host ${{ secrets.DOCKER_UNAME }}/app-server:${GITHUB_SHA::7}  
         
       
