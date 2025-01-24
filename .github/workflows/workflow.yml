@@ -20,7 +20,7 @@ jobs:
           docker build -t ${{ secrets.DOCKER_UNAME }}/app-server:${GITHUB_SHA::7} .
 
       - name: Test newly created build image
-        run: docker run --rm -d --name back-cnt --network host ${{ secrets.DOCKER_UNAME }}/app-server:${GITHUB_SHA::7}
+        run: docker run --rm -d --name back-cnt -p 4000:4000 ${{ secrets.DOCKER_UNAME }}/app-server:${GITHUB_SHA::7}
 
       - name: Push image to DockerHub
         if  : success()
@@ -32,8 +32,8 @@ jobs:
     runs-on: self-hosted
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      #- name: Checkout repository
+       # uses: actions/checkout@v3
 
       - name: Execute docker command
         id: test
