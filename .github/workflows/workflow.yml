@@ -34,11 +34,11 @@ jobs:
     steps:
       - name: Create docker container
         run: |
-          if ! docker ps -a --format '{{.Names}}' | grep -q 'back-cnt'; then
-            docker run --rm -d --name back-cnt --network host ${{ secrets.DOCKER_UNAME }}/app-server:${GITHUB_SHA::7}
-          else
+          if docker ps -a --format '{{.Names}}' | grep -q 'back-cnt'; then
             echo "Container with name 'back-cnt' already exists!"
             docker stop back-cnt
+            docker run --rm -d --name back-cnt --network host ${{ secrets.DOCKER_UNAME }}/app-server:${GITHUB_SHA::7}
+          else
             docker run --rm -d --name back-cnt --network host ${{ secrets.DOCKER_UNAME }}/app-server:${GITHUB_SHA::7}
           fi 
         
