@@ -6,7 +6,7 @@ on:
 
 jobs:
   Image-build-push:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     steps:
       - name: Checkout repository
@@ -14,6 +14,8 @@ jobs:
 
       - name: Build and tag of docker image
         run: |
+          pwd
+          ls -lt
           docker build -t ${{ secrets.DOCKER_UNAME }}/app-server:${GITHUB_SHA::7} .
 
       - name: Test newly created build image
