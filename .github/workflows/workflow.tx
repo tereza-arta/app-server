@@ -19,11 +19,13 @@ jobs:
           docker build -t ${{ secrets.DOCKER_UNAME }}/app-server:${GITHUB_SHA::7} .
 
       - name: Test newly created build image
-        run: docker run --rm -d --name back-cnt -p 4000:4000 ${{ secrets.DOCKER_UNAME }}/app-server:${GITHUB_SHA::7}
+        run: docker run --rm -d --name back-cnt-0 -p 4000:4000 ${{ secrets.DOCKER_UNAME }}/app-server:${GITHUB_SHA::7}
 
       - name: Push image to DockerHub
         if  : success()
         run : |
+          docker stop back-cnt-0 || true
+          docker rm back-cnt-0 || true
           docker login -u ${{ secrets.DOCKER_UNAME }} -p ${{ secrets.DOCKER_TOKEN }}
           docker push ${{ secrets.DOCKER_UNAME }}/app-server:${GITHUB_SHA::7}
 
