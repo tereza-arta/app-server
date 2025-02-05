@@ -13,10 +13,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Build and tag of docker image
-        run: |
-          pwd
-          ls -lt
-          docker build -t ${{ secrets.DOCKER_UNAME }}/app-server:${GITHUB_SHA::7} .
+        run: docker build -t ${{ secrets.DOCKER_UNAME }}/app-server:${GITHUB_SHA::7} .
 
       - name: Test newly created build image
         run: docker run --rm -d --name back-cnt-0 -p 4000:4000 ${{ secrets.DOCKER_UNAME }}/app-server:${GITHUB_SHA::7}
@@ -40,9 +37,6 @@ jobs:
             echo "Container with name 'back-cnt' already exists!"
             docker stop back-cnt || true
             docker rm back-cnt || true
-            docker run --rm -d --name back-cnt -p 4000:4000 ${{ secrets.DOCKER_UNAME }}/app-server:${GITHUB_SHA::7}
-          else
-            docker run --rm -d --name back-cnt --network host ${{ secrets.DOCKER_UNAME }}/app-server:${GITHUB_SHA::7}
-          fi 
+          fi
+          docker run --rm -d --name back-cnt -p 4000:4000 ${{ secrets.DOCKER_UNAME }}/app-server:${GITHUB_SHA::7}
         
-      
