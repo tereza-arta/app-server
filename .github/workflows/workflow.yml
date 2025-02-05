@@ -38,5 +38,5 @@ jobs:
             docker stop back-cnt || true
             docker rm back-cnt || true
           fi
-          docker run --rm -d --name back-cnt -p 4000:4000 ${{ secrets.DOCKER_UNAME }}/app-server:${GITHUB_SHA::7}
+          docker run --rm -d --name back-cnt --network host ${{ secrets.DOCKER_UNAME }}/app-server:${GITHUB_SHA::7}
         
